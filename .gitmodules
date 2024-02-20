@@ -1,0 +1,27 @@
+[submodule "ndn-cxx"]
+	path = ndn-cxx
+	url = https://github.com/named-data/ndn-cxx.git
+[submodule "NFD"]
+	path = NFD
+	url = https://github.com/named-data/NFD.git
+[submodule "PSync"]
+	path = PSync
+	url = https://github.com/named-data/PSync.git
+[submodule "ndn-svs"]
+	path = ndn-svs
+	url = https://github.com/named-data/ndn-svs
+[submodule "NLSR"]
+	path = NLSR
+	url = https://github.com/named-data/NLSR
+[submodule "ndn-tools"]
+	path = ndn-tools
+	url = https://github.com/named-data/ndn-tools
+[submodule "ndn-traffic-generator"]
+	path = ndn-traffic-generator
+	url = https://github.com/named-data/ndn-traffic-generator
+[submodule "infoedit"]
+	path = infoedit
+	url = https://github.com/NDN-Routing/infoedit
+[submodule "mini-ndn"]
+	path = mini-ndn
+	url = https://github.com/named-data/mini-ndn.git
