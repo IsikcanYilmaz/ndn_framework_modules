@@ -104,6 +104,7 @@ read doInstallMinindn
 if [ "$doInstallMinindn" == "y" ]; then
 	cd mini-ndn
 	./install.sh
+	cd ..
 fi
 
 ###############################
