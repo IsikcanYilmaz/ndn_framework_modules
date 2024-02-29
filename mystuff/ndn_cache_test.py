@@ -52,8 +52,8 @@ if __name__ == "__main__":
     setLogLevel('info')
     # topo = createTopologySimpleTree(ndn=True)
     # topo = createTopologyComplex(ndn=True)
-    topo = createTopologyPointToPoint()
-    # topo = createNdnCacheTopo(ndn=False)
+    # topo = createTopologyPointToPoint()
+    topo = createNdnCacheTopo(ndn=False)
     runMininet(topo)
     # runMinindn(topo)
 
