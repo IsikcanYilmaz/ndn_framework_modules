@@ -39,7 +39,7 @@ def runMininet(topo):
     consumer : Node = net.getNodeByName('h3_3')
     filename : str = "payload.bin"
     recvFilename : str = "received_payload.bin"
-    sizeBytes : int = 100 * 1024 
+    sizeBytes : int = 16 # 100 * 1024 
     
     util.nodeTest(producer)
     util.nodeTest(consumer)
@@ -59,6 +59,15 @@ def runMininet(topo):
 def runMinindn(topo):
     Minindn.cleanUp()
     Minindn.verifyDependencies()
+    """
+    STRATEGY_ASF = 'asf'
+    STRATEGY_BEST_ROUTE = 'best-route'
+    STRATEGY_MULTICAST = 'multicast'
+    STRATEGY_NCC = 'ncc'
+    PROTOCOL_UDP = 'udp'
+    PROTOCOL_TCP = 'tcp'
+    PROTOCOL_ETHER = 'ether'
+    """
     ndn = Minindn(topo=topo)
     ndn.start()
 
@@ -77,25 +86,26 @@ def runMinindn(topo):
     consumer : Node = ndn.net.getNodeByName('h3_3')
     filename = "payload.bin"
     recvFilename = "received_payload.bin"
-    sizeBytes = 100 * 1024 
+    sizeBytes = 16 # 1 * 1024 
     
-    util.nodeTest(producer)
-    util.nodeTest(consumer)
+    # util.nodeTest(producer)
+    # util.nodeTest(consumer)
     util.createPayload(node=producer, filename=filename, sizeBytes=sizeBytes)
-    util.listenForFile(node=consumer, filename=recvFilename)
+    # util.listenForFile(node=consumer, filename=recvFilename)
 
-    print(f'{producer.name} transferring {sizeBytes} Bytes to {consumer.name} at {consumer.IP()}') 
-    for i in range(0, NUM_TRIALS):
-        t0 = time.time()
-        util.sendFile(node=producer, destNode=consumer, filename=filename)
-        t1 = time.time()
-        print(f'Trial {i}: File transfer in {t1-t0} ms')
+    # print(f'{producer.name} transferring {sizeBytes} Bytes to {consumer.name} at {consumer.IP()}') 
+    # for i in range(0, NUM_TRIALS):
+    #     t0 = time.time()
+    #     util.sendFile(node=producer, destNode=consumer, filename=filename)
+    #     t1 = time.time()
+    #     print(f'Trial {i}: File transfer in {t1-t0} ms')
     
-    print(f'{producer.name} starting NDN filetransfer')
-    producer.cmd(f'nlsrc advertise {PREFIX}')
-    producer.cmd(f'cat {filename} | ndnpoke {PREFIX} &> producer.log &')
+    print(f'\n\n---------------\n{producer.name} starting NDN filetransfer')
+    producer.cmd(f'nlsrc advertise {PREFIX}', verbose=True)
+    producer.cmd(f'cat {filename} | ndnpoke {PREFIX} &> producer.log &', verbose=True)
+    time.sleep(20)
     t0 = time.time()
-    consumer.cmd(f'ndnpeek -p {PREFIX} &> {recvFilename}')
+    consumer.cmd(f'ndnpeek -p {PREFIX} > {recvFilename}', verbose=True)
     t1 = time.time()
     print(f'NDN File transfer in {t1-t0} ms')
 

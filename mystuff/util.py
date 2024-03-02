@@ -13,9 +13,15 @@ def nodeTest(node: Node):
 
 def createPayload(node: Node = None, 
                   sizeBytes: int = 4096, 
-                  filename: str = "payload.bin"
+                  filename: str = "payload.bin",
+                  ascii: bool = True,
                   ) -> None:
-    cmd = f'dd if=/dev/urandom of={filename} count={sizeBytes} bs=1'
+    cmd = ""
+    if ascii:
+        cmd = f'base64 /dev/urandom | head -c {sizeBytes} > {filename}'
+    else:
+        cmd = f'dd if=/dev/urandom of={filename} count={sizeBytes} bs=1'
+
     if node is not None:
         node.cmd(cmd)
     else:
