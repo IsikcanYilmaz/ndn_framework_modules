@@ -14,11 +14,12 @@ if [ $bearExists -eq 0 ]; then
 fi
 
 JOBS=1
+ASSUME_YES="--assume-yes"
 
 ###############################
 # ndn-cxx # https://docs.named-data.net/ndn-cxx/current/INSTALL.html#
 echo "[*] Installing ndn-cxx"
-sudo apt install build-essential pkg-config python3-minimal libboost-all-dev libssl-dev libsqlite3-dev
+sudo apt install build-essential pkg-config python3-minimal libboost-all-dev libssl-dev libsqlite3-dev $ASSUME_YES
 cd ndn-cxx
 ./waf configure --with-examples --with-tests
 $BEAR_CMD ./waf -j $JOBS
@@ -31,7 +32,7 @@ cd ..
 ###############################
 # NFD # https://docs.named-data.net/NFD/current/INSTALL.html
 echo "[*] Installing NFD"
-sudo apt install libpcap-dev libsystemd-dev
+sudo apt install libpcap-dev libsystemd-dev $ASSUME_YES
 cd NFD
 ./waf configure
 $BEAR_CMD ./waf -j $JOBS
