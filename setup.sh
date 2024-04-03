@@ -13,13 +13,15 @@ if [ $bearExists -eq 0 ]; then
 	BEAR_CMD="bear -- "
 fi
 
+JOBS=1
+
 ###############################
 # ndn-cxx # https://docs.named-data.net/ndn-cxx/current/INSTALL.html#
 echo "[*] Installing ndn-cxx"
 sudo apt install build-essential pkg-config python3-minimal libboost-all-dev libssl-dev libsqlite3-dev
 cd ndn-cxx
 ./waf configure --with-examples --with-tests
-$BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 	sudo ldconfig
@@ -32,7 +34,7 @@ echo "[*] Installing NFD"
 sudo apt install libpcap-dev libsystemd-dev
 cd NFD
 ./waf configure
-$BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 	sudo cp /usr/local/etc/ndn/nfd.conf.sample /usr/local/etc/ndn/nfd.conf
@@ -44,7 +46,7 @@ cd ..
 echo "[*] Installing PSync"
 cd PSync
 ./waf configure --with-examples
-$BEAR_CMD ./waf 
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 fi
@@ -55,7 +57,7 @@ cd ..
 echo "[*] Installing ndn-svs"
 cd ndn-svs
 ./waf configure --with-examples
-BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 fi
@@ -66,7 +68,7 @@ cd ..
 echo "[*] Installing NLSR"
 cd NLSR
 ./waf configure --with-psync --with-svs --with-tests
-$BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 fi
@@ -77,7 +79,7 @@ cd ..
 echo "[*] Installing ndn-tools"
 cd ndn-tools
 ./waf configure --with-tests
-$BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 fi
@@ -88,7 +90,7 @@ cd ..
 echo "[*] Installing ndn-traffic-generator"
 cd ndn-traffic-generator
 ./waf configure
-$BEAR_CMD ./waf
+$BEAR_CMD ./waf -j $JOBS
 if [ "$doInstall" == "y" ]; then
 	sudo ./waf install
 fi
