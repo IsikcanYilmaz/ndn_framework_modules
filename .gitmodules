@@ -25,3 +25,6 @@
 [submodule "mini-ndn"]
 	path = mini-ndn
 	url = https://github.com/named-data/mini-ndn.git
+[submodule "ndncert"]
+	path = ndncert
+	url = https://github.com/named-data/ndncert.git
