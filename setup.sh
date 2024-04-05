@@ -16,6 +16,8 @@ fi
 JOBS=1
 ASSUME_YES="--assume-yes"
 
+echo "[*] Num threads" $JOBS
+
 ###############################
 # ndn-cxx # https://docs.named-data.net/ndn-cxx/current/INSTALL.html#
 echo "[*] Installing ndn-cxx"
