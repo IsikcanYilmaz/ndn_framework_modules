@@ -13,7 +13,7 @@ if [ $bearExists -eq 0 ]; then
 	BEAR_CMD="bear -- "
 fi
 
-JOBS=1
+JOBS=8
 ASSUME_YES="--assume-yes"
 
 echo "[*] Num threads" $JOBS
