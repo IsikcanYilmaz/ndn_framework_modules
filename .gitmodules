@@ -28,6 +28,3 @@
 [submodule "ndncert"]
 	path = ndncert
 	url = https://github.com/named-data/ndncert.git
-[submodule "python-ndn"]
-	path = python-ndn
-	url = git@github.com:named-data/python-ndn.git
