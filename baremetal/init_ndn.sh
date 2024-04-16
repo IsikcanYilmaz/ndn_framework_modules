@@ -55,7 +55,6 @@ function nlsr_conf()
 	infoedit -f $NLSR_CONF -d security.validator.trust-anchor.file-name
 	infoedit -f $NLSR_CONF -s security.prefix-update-validator.trust-anchor.type -v any
 	infoedit -f $NLSR_CONF -d security.prefix-update-validator.trust-anchor.file-name
-
 }
 
 function setup_confs()
