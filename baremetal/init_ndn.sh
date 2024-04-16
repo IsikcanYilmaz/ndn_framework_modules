@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-NDN_LOG_DIR=$HOME/ndn_log
-NDN_CONF_DIR=/usr/local/etc/ndn/
-NFD_CONF=$NDN_CONF_DIR/nfd.conf
-NLSR_CONF=$NDN_CONF_DIR/nlsr.conf
-CLIENT_CONF=$NDN_CONF_DIR/client.conf
+NDN_LOG_DIR="$HOME/ndn_log"
+NDN_CONF_DIR="/usr/local/etc/ndn/"
+NFD_CONF="$NDN_CONF_DIR/nfd.conf"
+NLSR_CONF="$NDN_CONF_DIR/nlsr.conf"
+CLIENT_CONF="$NDN_CONF_DIR/client.conf"
 
 DEBUG_LEVEL="ERROR"
 CS_MAX_PACKETS="65536"
@@ -55,11 +55,6 @@ function nlsr_conf()
 	infoedit -f $NLSR_CONF -d security.validator.trust-anchor.file-name
 	infoedit -f $NLSR_CONF -s security.prefix-update-validator.trust-anchor.type -v any
 	infoedit -f $NLSR_CONF -d security.prefix-update-validator.trust-anchor.file-name
-
-	# Neighbors
-	infoedit -f $NLSR_CONF -d neighbors.neighbor
-	infoedit -f $NLSR_CONF -a neighbors.neighbor <<<'name /ndn/raspberrypi11-site/%C1.Router/cs/raspberrypi11 face-uri udp://192.168.6.11'
-	infoedit -f $NLSR_CONF -a neighbors.neighbor <<<'name /ndn/lubuntu-site/%C1.Router/cs/lubuntu face-uri udp://192.168.6.30'
 }
 
 function setup_confs()
@@ -71,13 +66,16 @@ function setup_confs()
 
 function nfd_create_faces()
 {
-	nfdc face create udp://192.168.6.11 permanent
-	nfdc face create udp://192.168.6.30 permanent
-}
-
-function launch_nfd()
-{
-	nfd-start; sleep 2
+	infoedit -f $NLSR_CONF -d neighbors.neighbor
+	IFS=$'\n'
+	for i in $(cat /etc/hosts | grep raspberry); do
+		facename=$(echo $i | awk '{print $2}')
+		faceip=$(echo $i | awk '{print $1}')
+		echo "Creating face to $facename udp://$faceip"
+		nfdc face create udp://$faceip permanent
+		infoedit -f $NLSR_CONF -a neighbors.neighbor <<<"name /ndn/$facename-site/%C1.Router/cs/$facename face-uri udp://$faceip"
+	done
+	unset IFS
 }
 
 function nfd_shortcut()
