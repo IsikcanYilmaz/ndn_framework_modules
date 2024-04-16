@@ -68,7 +68,7 @@ function nfd_create_faces()
 {
 	infoedit -f $NLSR_CONF -d neighbors.neighbor
 	IFS=$'\n'
-	for i in $(cat /etc/hosts | grep raspberry); do
+	for i in $(cat /etc/hosts | grep raspberry | grep -v 127.0.0.1); do
 		facename=$(echo $i | awk '{print $2}')
 		faceip=$(echo $i | awk '{print $1}')
 		echo "Creating face to $facename udp://$faceip"
