@@ -73,7 +73,7 @@ function nfd_create_faces()
 	for i in $(cat /etc/hosts | grep raspberry | grep -v 127.0); do
 		facename=$(echo $i | awk '{print $2}')
 		faceip=$(echo $i | awk '{print $1}')
-		if [ $ADHOC == 1 ]; then
+		if [ $AD_HOC == 1 ]; then
 			faceip=$(echo $faceip | sed 's/192.168.6/192.168.1/g')
 		fi
 		echo "Creating face to $facename udp://$faceip"
