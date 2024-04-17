@@ -100,6 +100,4 @@ function poketest()
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     nfd_shortcut
-		sleep 1
-		nfd_create_faces
 fi
