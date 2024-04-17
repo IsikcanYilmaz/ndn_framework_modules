@@ -11,6 +11,8 @@ CS_MAX_PACKETS="65536"
 CS_POLICY="lru"
 CS_UNSOLICITED="drop-all"
 
+AD_HOC=1
+
 function fresh_confs()
 {
 	# Init. Create log directory. Copy over fresh config files.
@@ -71,6 +73,9 @@ function nfd_create_faces()
 	for i in $(cat /etc/hosts | grep raspberry | grep -v 127.0); do
 		facename=$(echo $i | awk '{print $2}')
 		faceip=$(echo $i | awk '{print $1}')
+		if [ $ADHOC == 1 ]; then
+			faceip=$(echo $faceip | sed 's/192.168.6/192.168.1/g')
+		fi
 		echo "Creating face to $facename udp://$faceip"
 		nfdc face create udp://$faceip permanent
 		infoedit -f $NLSR_CONF -a neighbors.neighbor <<<"name /ndn/$facename-site/%C1.Router/cs/$facename face-uri udp://$faceip"
