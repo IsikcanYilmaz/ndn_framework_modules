@@ -96,3 +96,9 @@ function poketest()
 {
 	nlsrc advertise $1; echo $2 | ndnpoke $1 &
 }
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    nfd_shortcut
+		sleep 1
+		nfd_create_faces
+fi
