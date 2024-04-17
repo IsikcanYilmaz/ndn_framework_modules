@@ -89,6 +89,7 @@ function nfd_shortcut()
 	nfd_conf
 	nfd-start
 	nlsr_conf
+	nfd_create_faces
 	nlsr -f $NLSR_CONF &
 }
 
