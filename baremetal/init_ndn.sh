@@ -11,7 +11,7 @@ CS_MAX_PACKETS="65536"
 CS_POLICY="lru"
 CS_UNSOLICITED="drop-all"
 
-AD_HOC=1
+AD_HOC=0
 
 function fresh_confs()
 {
